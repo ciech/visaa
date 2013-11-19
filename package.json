@@ -1,0 +1,9 @@
+{
+  "name": "visaa",
+  "description": "Visualization of Alignment Algorithms",
+  "repository": "https://github.com/ciech/visaa",
+  "dependencies": {},
+  "devDependencies": {
+
+  }
+}
