@@ -63,6 +63,10 @@ textarea {
 
 
 
+body
+{
+        background-color: #34495e;
+}
 
 body,
 .pure-g [class *= "pure-u"],
@@ -70,12 +74,29 @@ body,
 {
 
     font-family: 'Open Sans', sans-serif;
-    background-color: #34495e;
+}
+
+#content-container
+{
+    display: table;
+    width: 100%;
 }
 
 .inline
 {
-    display:  block;
+    float: none;
+    display: table-cell;  
+}
+
+#left-options
+{
+    width: 33%;
+}
+
+#right-options
+{
+    width: 66%;
+    border-left: 1px solid #16a085;
 }
 
 #container
@@ -118,6 +139,11 @@ border-radius: 0.5em;
     padding: 0.4em 1em;
 }
 
+.section-set
+{
+    background-color: rgb(193, 216, 195);
+}
+
 .section
 {
     margin: 0.5em 0em;
@@ -133,7 +159,13 @@ border-radius: 0.5em;
 }
 
 
-
+#additional-content
+{
+    width: 92%;
+    padding: 4%;
+    height: 100%;
+    border-left: 1px solid #16a085;
+}
 
 
 /* ==========================================================================
