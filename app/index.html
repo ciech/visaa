@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en" ng-app="">
+<html class="no-js" lang="en" ng-app="visaaApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,35 +22,66 @@
     </div>
 
     <div id="content"> 
+<div id="content-container" class=" clearfix">
+  <div class="inline"     id="left-options">
+    <form class="pure-form">
+       <fieldset>
 
-<form class="pure-form">
-    <fieldset>
-
-        <div class="section">
+        <div class="section" id="algorithm-selection" ng-controller="AlgorithmController">
           <div class="section-header">
             Select algorithm:
           </div>
-           <div class="section-content">
-              <label for="algorithm">
-                  <input type="radio" name="algorithm" value="male"> Needleman-Wunch<br>
-                  <input type="radio" name="algorithm" value="female"> Smith-Waterman
-              </label>
+           <div class="section-content" ng-class="{'section-set': isSet()}">
+               <input type="radio" value="needleman-wunch" ng-model="value" ng-click="set()" ng-disabled="isSet()"> Needleman-Wunch<br>
+               <input type="radio" value="smith-waterman" ng-model="value" ng-click="set()" ng-disabled="isSet()"> Smith-Waterman
            </div>
         </div>
-        <div class="section">
+        <div class="section" id="input-selection" ng-controller="InputController">
           <div class="section-header">
             Input data:
           </div>
-           <div class="section-content">
-              <label for="input-data">
-                  <input type="radio" name="input-data" value="file"> From File<br>
-                  <input type="radio" name="input-data" value="user"> User Input <br>
-                  <input type="radio" name="input-data" value="generated"> Autogenerate <br>
-              </label>
+           <div class="section-content" ng-class="{'section-set': isSet()}">
+                  <input type="radio" value="file" ng-click="set()" ng-model="value" ng-disabled="isSet()"> From File<br>
+                  <input type="radio" value="user" ng-click="set()" ng-model="value" ng-disabled="isSet()"> User Input <br>
+                  <input type="radio" value="generated" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Autogenerate <br>
            </div>
         </div>
-
-
+        <div class="section" id="score-selection" ng-controller="ScoreController">
+          <div class="section-header">
+            Score type:
+          </div>
+           <div class="section-content " ng-class="{'section-set': isSet()}">
+                  <input type="radio" name="score-type" value="simple" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Simple<br>
+                  <input type="radio" name="score-type" value="matrix" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Punishment/Prize Matrix
+           </div>
+        </div>
+        <div class="section" id="punishment-selection" ng-controller="PunishmentController">
+          <div class="section-header">
+            Punishment type:
+          </div>
+           <div class="section-content" ng-class="{'section-set': isSet()}">
+                  <input type="radio" name="punishment-type" value="linear" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Linear<br>
+                  <input type="radio" name="punishment-type" value="affine" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Affine
+           </div>
+        </div>
+        <div class="section" id="work-mode-selection" ng-controller="WorkModeController">
+          <div class="section-header">
+            Work mode:
+          </div>
+           <div class="section-content" ng-class="{'section-set': isSet()}">
+                  <input type="radio" name="work-type" value="fast" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Quick Result<br>
+                  <input type="radio" name="punishment-type" value="visualization" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Vizualization
+           </div>
+        </div>
+       </fieldset>
+     </form>
+  </div>
+  <div class="inline" id="right-options" ng-controller="AdditionalParamsController">
+      Additional info for {{ getCurrentFieldName() }}, actual value {{ getCurrentFieldValue() }}
+      <br/>
+      <button class="pure-button pure-button-primary" ng-click="doneCurrentField()">Done</button>
+  </div>
+</div>
         <div class="section">
           <button class="pure-button pure-button-primary">Start</button>
         </div>
