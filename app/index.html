@@ -22,7 +22,7 @@
     </div>
 
     <div id="content"> 
-<div id="content-container" class=" clearfix">
+<div id="content-container" class="clearfix">
   <div class="inline"     id="left-options">
     <form class="pure-form">
        <fieldset>
@@ -31,56 +31,111 @@
           <div class="section-header">
             Select algorithm:
           </div>
-           <div class="section-content" ng-class="{'section-set': isSet()}">
-               <input type="radio" value="needleman-wunch" ng-model="value" ng-click="set()" ng-disabled="isSet()"> Needleman-Wunch<br>
-               <input type="radio" value="smith-waterman" ng-model="value" ng-click="set()" ng-disabled="isSet()"> Smith-Waterman
+           <div class="section-content" ng-class="{'section-set': isSet()}" ng-click="unSet()">
+               <input type="radio" name="algorithm-type" ng-click="set('needleman-wunch'); $event.stopPropagation()" ng-disabled="isSet()"> Needleman-Wunch<br>
+               <input type="radio" name="algorithm-type" ng-click="set('smith-waterman'); $event.stopPropagation()" ng-disabled="isSet()"> Smith-Waterman
            </div>
         </div>
         <div class="section" id="input-selection" ng-controller="InputController">
           <div class="section-header">
             Input data:
           </div>
-           <div class="section-content" ng-class="{'section-set': isSet()}">
-                  <input type="radio" value="file" ng-click="set()" ng-model="value" ng-disabled="isSet()"> From File<br>
-                  <input type="radio" value="user" ng-click="set()" ng-model="value" ng-disabled="isSet()"> User Input <br>
-                  <input type="radio" value="generated" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Autogenerate <br>
+           <div class="section-content" ng-class="{'section-set': isSet()}" ng-click="unSet()">
+                  <input type="radio" name="input-type" ng-click="set('file'); $event.stopPropagation()" ng-disabled="isSet()"> From File<br>
+                  <input type="radio" name="input-type" ng-click="set('user'); $event.stopPropagation()" ng-disabled="isSet()"> User Input <br>
            </div>
         </div>
         <div class="section" id="score-selection" ng-controller="ScoreController">
           <div class="section-header">
             Score type:
           </div>
-           <div class="section-content " ng-class="{'section-set': isSet()}">
-                  <input type="radio" name="score-type" value="simple" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Simple<br>
-                  <input type="radio" name="score-type" value="matrix" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Punishment/Prize Matrix
+           <div class="section-content " ng-class="{'section-set': isSet()}" ng-click="unSet()">
+                  <input type="radio" name="score-type" ng-click="set('simple'); $event.stopPropagation()"  ng-disabled="isSet()"> Simple<br>
+                  <input type="radio" name="score-type" ng-click="set('matrix'); $event.stopPropagation()"  ng-disabled="isSet()"> Punishment/Prize Matrix
            </div>
         </div>
         <div class="section" id="punishment-selection" ng-controller="PunishmentController">
           <div class="section-header">
             Punishment type:
           </div>
-           <div class="section-content" ng-class="{'section-set': isSet()}">
-                  <input type="radio" name="punishment-type" value="linear" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Linear<br>
-                  <input type="radio" name="punishment-type" value="affine" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Affine
+           <div class="section-content" ng-class="{'section-set': isSet()}" ng-click="unSet()">
+                  <input type="radio" name="punishment-type" ng-click="set('linear'); $event.stopPropagation()" ng-disabled="isSet()"> Linear<br>
+                  <input type="radio" name="punishment-type" ng-click="set('affine'); $event.stopPropagation()" ng-disabled="isSet()"> Affine
            </div>
         </div>
         <div class="section" id="work-mode-selection" ng-controller="WorkModeController">
           <div class="section-header">
             Work mode:
           </div>
-           <div class="section-content" ng-class="{'section-set': isSet()}">
-                  <input type="radio" name="work-type" value="fast" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Quick Result<br>
-                  <input type="radio" name="punishment-type" value="visualization" ng-click="set()" ng-model="value" ng-disabled="isSet()"> Vizualization
+           <div class="section-content" ng-class="{'section-set': isSet()}" ng-click="unSet()">
+                  <input type="radio" name="work-type" ng-click="set('fast'); $event.stopPropagation()" ng-disabled="isSet()"> Quick Result<br>
+                  <input type="radio" name="work-type" ng-click="set('visualize'); $event.stopPropagation()" ng-disabled="isSet()"> Vizualization
            </div>
         </div>
        </fieldset>
      </form>
   </div>
   <div class="inline" id="right-options" ng-controller="AdditionalParamsController">
-      Additional info for {{ getCurrentFieldName() }}, actual value {{ getCurrentFieldValue() }}
-      <br/>
-      <button class="pure-button pure-button-primary" ng-click="doneCurrentField()">Done</button>
+<div class="right-container">
+  <form class="pure-form pure-form-stacked">
+    <fieldset>
+      <div id="additonal-input-file" ng-show="is('input','file')">
+      <input type="file" id="files" name="files[]" multiple />
+  <output id="list"></output>
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
   </div>
+  <div id="additonal-input-user" ng-show="is('input','user')">
+    <button class="pure-button pure-button-primary" ng-click="generateInput()">Generate</button>
+    <br>
+    <label for="seq1">First sequence: </label> <textarea class="sequence" ng-model="seq1" name="seq1" id="seq1"></textarea>
+    <label for="seq1">Second sequence: </label> <textarea class="sequence" ng-model="seq2" name="seq2" id="seq2"></textarea>
+  </div>
+
+  <div id="additonal-score-simple" ng-show="is('score','simple')">
+    <textarea class="sequence" name="align[seq1]" id="align_seq1"></textarea>
+    <textarea class="sequence" name="align[seq1]" id="align_seq1"></textarea>
+  </div>
+
+  <div id="additonal-score-matrix" ng-show="is('score','matrix')">
+    <textarea class="sequence" name="align[seq1]" id="align_seq1"></textarea>
+  </div>
+
+  <div id="additonal-punishment-linear" ng-show="is('punishment','linear')">
+    <button class="pure-button pure-button-primary" ng-click="generateLinearGap()">Example</button>
+    <br>
+    <label for="linear">Value of gap penalty: </label> <input class="number" type="text" ng-model="linear" name="linear" id="linear">
+  </div>
+
+    <div id="additonal-punishment-affine" ng-show="is('punishment','affine')">
+    <button class="pure-button pure-button-primary" ng-click="generateAffineGap()">Example</button>
+    <br>
+    <label for="affine-open">Value of gap penalty for opening: </label> <input class="number" ng-model="affine_open" type="text" name="affine-open" id="affine-open">
+    <label for="affine-extend">Value of gap penalty for extending: </label> <input class="number" ng-model="affine_extend" type="text" name="affine-extend" id="affine-extend">
+  </div>
+    <br>
+    <button class="pure-button pure-button-primary" ng-show="showButton()" ng-click="doneCurrentField()">Done</button>
+</div>
+</fieldset>
+</form>
+  </div>
+ 
 </div>
         <div class="section">
           <button class="pure-button pure-button-primary">Start</button>

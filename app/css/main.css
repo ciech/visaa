@@ -78,25 +78,36 @@ body,
 
 #content-container
 {
-    display: table;
     width: 100%;
 }
 
 .inline
 {
-    float: none;
-    display: table-cell;  
+    float: left;
 }
 
 #left-options
 {
     width: 33%;
+    border-right: 1px solid #16a085;
+
+}
+
+.sequence
+{
+    width: 75%;
 }
 
 #right-options
 {
-    width: 66%;
-    border-left: 1px solid #16a085;
+    width: 60%;
+    
+}
+
+.right-container
+{
+    margin: 2%;
+    padding: 2%;
 }
 
 #container
